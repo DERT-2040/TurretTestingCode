@@ -32,12 +32,9 @@ public class VisionCommunication extends SubsystemBase{
         String distanceString = "";
         String xString = "";
         String yString = "";
-        String widthString = "";
         int commaCount = 0;
         try{
-            System.out.println("Recieved");
             clientSocket.receive(receivePacket);
-            System.out.println("Recieved Pt 2");
             inputData = new String(receivePacket.getData());
             recievedPacket = 1;
             
@@ -65,11 +62,7 @@ public class VisionCommunication extends SubsystemBase{
                 if(commaCount == 2){
                     yString += inputData.charAt(i);
                 }
-                if(commaCount == 3){
-                    widthString += inputData.charAt(i);
-                }
-                if(commaCount > 3){
-                    i++;
+                if(commaCount > 2){
                 }
             }
 
@@ -77,7 +70,6 @@ public class VisionCommunication extends SubsystemBase{
                 distance = Double.parseDouble(distanceString);
                 x = Double.parseDouble(xString);
                 y = Double.parseDouble(yString);
-                //width = Double.parseDouble(widthString); 
             }
 
             

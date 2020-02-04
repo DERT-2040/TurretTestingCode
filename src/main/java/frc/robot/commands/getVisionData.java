@@ -12,7 +12,6 @@ public class getVisionData extends CommandBase {
     }
 
     public void execute(){
-        System.out.println("pls");
         m_VisionCommunication.getArrayData();
         
     }
