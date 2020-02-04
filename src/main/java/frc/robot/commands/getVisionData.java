@@ -11,11 +11,13 @@ public class getVisionData extends CommandBase {
         addRequirements(m_VisionCommunication);
     }
 
-    public void initialize(){
-        m_VisionCommunication.getData();
+    public void execute(){
+        System.out.println("pls");
+        m_VisionCommunication.getArrayData();
+        
     }
 
     public boolean isFinished(){
-        return true;
+        return false;
     }
 }

@@ -9,16 +9,15 @@ public class VisionCommunication extends SubsystemBase{
     private double distance;
     private double width;
     private DatagramSocket clientSocket;
-    private InetAddress IPAddress;
     private byte[] receiveData;
     private DatagramPacket receivePacket;
     private String inputData;
 
     public VisionCommunication(){
         try{
-            clientSocket = new DatagramSocket();
-            IPAddress = InetAddress.getByName("10.20.40.69");
-            receiveData = new byte[1024];
+            clientSocket = new DatagramSocket(5805);
+            clientSocket.setSoTimeout(10);
+            receiveData = new byte[100];
             receivePacket = new DatagramPacket(receiveData, receiveData.length);
             
         }
@@ -27,7 +26,7 @@ public class VisionCommunication extends SubsystemBase{
         }
     }
 
-    public double[] getData(){
+    public double[] getArrayData(){
         double[] finalArray = new double[5];
         double recievedPacket = 0;
         String distanceString = "";
@@ -36,9 +35,12 @@ public class VisionCommunication extends SubsystemBase{
         String widthString = "";
         int commaCount = 0;
         try{
+            System.out.println("Recieved");
             clientSocket.receive(receivePacket);
+            System.out.println("Recieved Pt 2");
             inputData = new String(receivePacket.getData());
             recievedPacket = 1;
+            
         }
         catch (Exception e){
             System.out.println("Error 2: " + e.getMessage()); 
@@ -46,8 +48,13 @@ public class VisionCommunication extends SubsystemBase{
         }
         if(recievedPacket == 1){
             for(int i = 0; i < inputData.length(); i++){
+                if(inputData.charAt(i) == 'E'){
+                    recievedPacket = 0;
+                    break;
+                }
                 if(inputData.charAt(i) == ','){
                     commaCount++;
+                    i++;
                 }
                 if(commaCount == 0){
                     distanceString += inputData.charAt(i);
@@ -61,12 +68,19 @@ public class VisionCommunication extends SubsystemBase{
                 if(commaCount == 3){
                     widthString += inputData.charAt(i);
                 }
+                if(commaCount > 3){
+                    i++;
+                }
             }
 
-            distance = Double.parseDouble(distanceString);
-            x = Double.parseDouble(xString);
-            y = Double.parseDouble(yString);
-            width = Double.parseDouble(widthString);
+            if(recievedPacket == 1){
+                distance = Double.parseDouble(distanceString);
+                x = Double.parseDouble(xString);
+                y = Double.parseDouble(yString);
+                //width = Double.parseDouble(widthString); 
+            }
+
+            
         }
 
         if(recievedPacket == 0){

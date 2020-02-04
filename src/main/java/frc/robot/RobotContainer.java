@@ -42,8 +42,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_Turret.setDefaultCommand(new JoystickTurret(m_Turret, () -> m_Controller.getX(GenericHID.Hand.kLeft)));
-    
-    
+    //m_VisionCommunication.setDefaultCommand(new getVisionData(m_VisionCommunication));
   }
 
   /**
@@ -55,7 +54,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_Controller, Button.kBumperLeft.value).whenPressed(new Shoot(m_Shooter)).whenReleased(new StopShoot(m_Shooter));
     new JoystickButton(m_Controller, Button.kBumperRight.value).whenPressed(new startIntake(m_Intake)).whenReleased(new stopIntake(m_Intake));
-    new JoystickButton(m_Controller, Button.kB.value).whenPressed(new getVisionData(m_VisionCommunication));
+    new JoystickButton(m_Controller, Button.kA.value).whenPressed(new setTurretVision(m_Turret, m_VisionCommunication)).whenReleased(new stopTurret(m_Turret));
   }
 
 
