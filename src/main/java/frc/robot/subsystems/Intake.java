@@ -9,7 +9,7 @@ public class Intake extends SubsystemBase {
 
   //Basic start and stop motor control
   public void startMotor(){
-    m_shooterMotor.set(0.25);
+    m_shooterMotor.set(-1);
   }
 
   public void stopMotor(){
