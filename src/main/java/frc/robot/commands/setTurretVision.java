@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class setTurretVision extends CommandBase {
     private final Turret m_Turret;
     private final VisionCommunication m_VisionCommunication;
-    private double x;
+    private double x = 320;
     
     public setTurretVision(Turret subsystem, VisionCommunication subsystemVision){
         m_Turret = subsystem;
@@ -16,7 +16,9 @@ public class setTurretVision extends CommandBase {
     }
 
     public void execute(){
-        x = m_VisionCommunication.getArrayData()[2];
+        if(x != 999){
+            x = m_VisionCommunication.getArrayData()[2];
+        }
         if(x > 340 && x != 999){
             m_Turret.turnTurret(.10);
         }

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import java.net.*;
 
 public class VisionCommunication extends SubsystemBase{
@@ -34,6 +35,7 @@ public class VisionCommunication extends SubsystemBase{
         String distanceString = "";
         String xString = "";
         String yString = "";
+        String widthString = "";
         int commaCount = 0;
 
         //Trys to recieve a packet here
@@ -71,7 +73,10 @@ public class VisionCommunication extends SubsystemBase{
                 if(commaCount == 2){
                     yString += inputData.charAt(i);
                 }
-                if(commaCount > 2){
+                if(commaCount == 3){
+                    widthString += inputData.charAt(i);
+                }
+                if(commaCount > 3){
                 }
             }
 
@@ -80,6 +85,13 @@ public class VisionCommunication extends SubsystemBase{
                 distance = Double.parseDouble(distanceString);
                 x = Double.parseDouble(xString);
                 y = Double.parseDouble(yString);
+                try{
+                    width = Double.parseDouble(widthString);
+                }
+                catch(Exception e){
+                    System.out.println("The width error is:" + e);
+                    width = 999; 
+                }
             }
         }
 
@@ -100,5 +112,15 @@ public class VisionCommunication extends SubsystemBase{
         finalArray[3] = y;
         finalArray[4] = width;
         return finalArray;
+    }
+
+    //Make an equation of best fit for finding angles.
+    public double getHorizontalAngle(){
+        double angle = 0;
+        double xInches;
+        double width = getArrayData()[4];
+        double distance = getArrayData()[1];
+        double x = getArrayData()[2];   
+        return angle;
     }
 }
