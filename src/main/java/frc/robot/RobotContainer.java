@@ -13,13 +13,14 @@ import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+//import sun.management.Sensor;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static edu.wpi.first.wpilibj.XboxController.Button;
-
+//import com.ctre.phoenix.motorcontrol.SensorCollection;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -55,6 +56,7 @@ public class RobotContainer {
     new JoystickButton(m_Controller, Button.kBumperLeft.value).whenPressed(new Shoot(m_Shooter)).whenReleased(new StopShoot(m_Shooter));
     new JoystickButton(m_Controller, Button.kBumperRight.value).whenPressed(new startIntake(m_Intake)).whenReleased(new stopIntake(m_Intake));
     new JoystickButton(m_Controller, Button.kA.value).whenPressed(new setTurretVision(m_Turret, m_VisionCommunication)).whenReleased(new stopTurret(m_Turret));
+    new JoystickButton(m_Controller, Button.kB.value).whenPressed(new encoderRead(m_Turret));
   }
 
 
