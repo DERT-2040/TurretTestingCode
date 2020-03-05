@@ -19,9 +19,9 @@ public class PIDTurret extends PIDCommand {
 
   private final Turret m_Turret;
   private final VisionCommunication m_VisionCommunication;
-
-  private double pwmPosition = m_Turret.getPwmPosition();
+  private double pwmPosition =  m_Turret.getPwmPosition();
   private double angleError = m_VisionCommunication.getAngleAprox() + pwmPosition;
+  private double targetAngleDegrees = pwmPosition;
   /**
    * Turns to robot to the specified angle.
    *
