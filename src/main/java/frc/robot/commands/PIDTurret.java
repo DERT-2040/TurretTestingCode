@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class PIDTurret extends PIDCommand {
 
-  private final int angleError = VisionCommunication.finalValue + Turret.actualValue;
   private final Turret m_Turret;
   private final VisionCommunication m_VisionCommunication;
+  private final double angleError = m_VisionCommunication.getArrayData() + m_Turret.getPwmPosition();
   /**
    * Turns to robot to the specified angle.
    *
@@ -32,7 +32,7 @@ public class PIDTurret extends PIDCommand {
     super(
         new PIDController(Constants.kTurnP, Constants.kTurnI, Constants.kTurnD),
         // Close loop on heading
-        m_Turret::angleError,
+        m_Turret::getPwmPosition,
         // Set reference to target
         targetAngleDegrees,
         // Pipe output to turn robot
