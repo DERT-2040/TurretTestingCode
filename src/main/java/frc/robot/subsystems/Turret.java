@@ -1,15 +1,22 @@
 package frc.robot.subsystems;
-
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
 
-public class Turret extends SubsystemBase {
+public class Turret extends PIDSubsystem {
 
   private static final int turretMotorID = 4;
   private WPI_TalonSRX m_turretMotor = new WPI_TalonSRX(turretMotorID);    
   private final SensorCollection sensors = m_turretMotor.getSensorCollection();
-  private volatile int lastValue = Integer.MIN_VALUE;
+  private volatile int lastValue = Integer.MIN_VALUE;  
+
+  public Turret() {
+    super(new PIDController(, , ));
+    getController().setTolerance();
+    m_shooterEncoder.setDistancePerPulse(ShooterConstants.kEncoderDistancePerPulse);
+    setSetpoint(ShooterConstants.kShooterTargetRPS);
+  }
 
   //Drives the Turret with a deadband
   public void turnTurretDeadband(double turnSpeed){
