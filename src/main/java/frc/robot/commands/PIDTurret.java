@@ -16,36 +16,32 @@ import frc.robot.Constants;
  * A command that will turn the robot to the specified angle.
  */
 public class PIDTurret extends PIDCommand {
-
-  private final Turret m_Turret;
-  private final VisionCommunication m_VisionCommunication;
-  private final double pwmPosition;
-  private final double angleError;
-  private final double targetAngleDegrees;
-
   /**
    * Turns to robot to the specified angle.
    *
-   * @param targetAngleDegrees The angle to turn to
-   * @param m_Turret              The drive subsystem to use
-   * @param m_Vision
+   * @param k_targetAngleDegrees The angle to turn to
+   * @param k_Turret              The drive subsystem to use
+   * @param k_Vision
    */
-  public PIDTurret(double targetAngleDegrees, Turret m_Turret, VisionCommunication m_Vision) {  
+  private double pwmPosition;
+  private double angleError;
+
+  public PIDTurret(double k_targetAngleDegrees, Turret k_Turret, VisionCommunication k_Vision) { 
     super(
         new PIDController(Constants.kTurnP, Constants.kTurnI, Constants.kTurnD),
         // Close loop on heading
-        m_Turret::getPwmPosition,
+        k_Turret::getPwmPosition,
         // Set reference to target
-        targetAngleDegrees,
+        k_targetAngleDegrees,
         // Pipe output to turn robot
-        output -> m_Turret.turnTurret(output),
+        output -> k_Turret.turnTurret(output),
         // Require the drive
-        m_Turret
+        k_Turret
         );
     
-    pwmPosition =  m_Turret.getPwmPosition();
-    angleError = m_VisionCommunication.getAngleAprox() + pwmPosition;
-    targetAngleDegrees = pwmPosition;
+    pwmPosition =  k_Turret.getPwmPosition();
+    angleError = k_Vision.getAngleAprox() + pwmPosition;
+    k_targetAngleDegrees = pwmPosition;
     
 
     // Set the controller to be continuous (because it is an angle controller)
