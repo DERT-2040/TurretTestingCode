@@ -22,6 +22,7 @@ public final class Constants {
     public static double kTurnI = 0;
     public static double kTurnD = 0;
     public static double kTurnToleranceDeg = 1;
-    public static double kTurnRateToleranceDegPerS = 1;
+    public static double kTurnRateToleranceDegPerS = 1; // this the maximum speed that the turret can turn at.
     //heck
+    //I agree
 }
