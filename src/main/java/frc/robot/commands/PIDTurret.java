@@ -19,9 +19,10 @@ public class PIDTurret extends PIDCommand {
 
   private final Turret m_Turret;
   private final VisionCommunication m_VisionCommunication;
-  private double pwmPosition =  m_Turret.getPwmPosition();
-  private double angleError = m_VisionCommunication.getAngleAprox() + pwmPosition;
-  private double targetAngleDegrees = pwmPosition;
+  private final double pwmPosition;
+  private final double angleError;
+  private final double targetAngleDegrees;
+
   /**
    * Turns to robot to the specified angle.
    *
@@ -41,6 +42,11 @@ public class PIDTurret extends PIDCommand {
         // Require the drive
         m_Turret
         );
+    
+    pwmPosition =  m_Turret.getPwmPosition();
+    angleError = m_VisionCommunication.getAngleAprox() + pwmPosition;
+    targetAngleDegrees = pwmPosition;
+    
 
     // Set the controller to be continuous (because it is an angle controller)
     getController().enableContinuousInput(-180, 180);

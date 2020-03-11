@@ -114,13 +114,16 @@ public class VisionCommunication extends SubsystemBase{
         return finalArray;
     }
 
-    //Make an equation of best fit for finding angles.
-    public double getHorizontalAngle(){
-        double angle = 0;
-        double xInches;
-        double width = getArrayData()[4];
-        double distance = getArrayData()[1];
-        double x = getArrayData()[2];   
-        return angle;
+    public double getAngleAprox(){
+        double finalAngle = 0;
+        double x = getArrayData()[2];
+        if(x != 999){
+            finalAngle = -26+(0.0848 * x) + (-0.0000015 * x * x);
+            System.out.println(finalAngle);
+            return finalAngle;
+        }
+        else{
+            return 999;
+        }
     }
 }
